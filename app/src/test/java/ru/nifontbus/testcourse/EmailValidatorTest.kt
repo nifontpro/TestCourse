@@ -1,8 +1,7 @@
 package ru.nifontbus.testcourse
 
 import com.geekbrains.myfirsttests.EmailValidator
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Test
 
 class EmailValidatorTest {
@@ -57,4 +56,38 @@ class EmailValidatorTest {
     fun emailValidator_InvalidEmailSpecSymbol_ReturnsFalse() {
         assertFalse(EmailValidator.isValidEmail("*name@ya.ru"))
     }
+
+    @Test
+    fun testEquals() {
+        assertEquals(243.0, FirstTest.power(3.0, 5.0), 0.01)
+    }
+
+    @Test
+    fun testNotEquals() {
+        assertNotEquals(FirstTest.power(3.0, 5.0), 81.0)
+    }
+
+    @Test
+    fun testArrayEquals() {
+        val array2 = FirstTest.array1.clone()
+        assertArrayEquals(FirstTest.array1, array2)
+    }
+
+    @Test
+    fun testAssertNull() {
+        assertNull(null)
+    }
+
+    @Test
+    fun testAssertNotNull() {
+        assertNotNull(FirstTest.array1)
+    }
+
+    @Test
+    fun testAssertSame() {
+        val array2 = FirstTest.array1
+        assertSame(FirstTest.array1, array2)
+    }
+
+    // https://github.com/nifontpro/TestCourse/pull/1
 }
