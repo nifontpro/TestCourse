@@ -1,11 +1,10 @@
 package ru.nifontbus.testcourse
 
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import ru.nifontbus.testcourse.HomeWork1.Coffee
 
 
 class TestCoffee {
@@ -34,5 +33,7 @@ class TestCoffee {
         assertEquals(id, 43)
         verify(coffee, times(2)).id
     }*/
+
+
 
 }

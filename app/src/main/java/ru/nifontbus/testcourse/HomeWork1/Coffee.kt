@@ -1,4 +1,4 @@
-package ru.nifontbus.testcourse
+package ru.nifontbus.testcourse.HomeWork1
 
 import kotlin.random.Random
 
