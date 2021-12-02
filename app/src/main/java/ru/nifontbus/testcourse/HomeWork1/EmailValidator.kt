@@ -1,4 +1,4 @@
-package com.geekbrains.myfirsttests
+package ru.nifontbus.testcourse.HomeWork1
 
 import android.text.Editable
 import android.text.TextWatcher

@@ -1,8 +1,9 @@
 package ru.nifontbus.testcourse
 
-import com.geekbrains.myfirsttests.EmailValidator
 import org.junit.Assert.*
 import org.junit.Test
+import ru.nifontbus.testcourse.HomeWork1.EmailValidator
+import ru.nifontbus.testcourse.HomeWork1.FirstTest
 
 class EmailValidatorTest {
 
@@ -89,5 +90,4 @@ class EmailValidatorTest {
         assertSame(FirstTest.array1, array2)
     }
 
-    // https://github.com/nifontpro/TestCourse/pull/1
 }
