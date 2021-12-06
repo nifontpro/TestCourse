@@ -1,11 +1,12 @@
-package ru.nifontbus.testcourse.view
+package ru.nifontbus.testcourse.view.search
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.nifontbus.testcourse.databinding.ListItemBinding
 import ru.nifontbus.testcourse.model.SearchResult
-import ru.nifontbus.testcourse.view.SearchResultAdapter.SearchResultViewHolder
+import ru.nifontbus.testcourse.view.search.SearchResultAdapter.SearchResultViewHolder
 
 internal class SearchResultAdapter : RecyclerView.Adapter<SearchResultViewHolder>() {
 
@@ -17,7 +18,6 @@ internal class SearchResultAdapter : RecyclerView.Adapter<SearchResultViewHolder
     ): SearchResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return SearchResultViewHolder(
-//            LayoutInflater.from(parent.context).inflate(R.layout.list_item, null)
             ListItemBinding.inflate(inflater, parent, false)
         )
     }
@@ -33,6 +33,7 @@ internal class SearchResultAdapter : RecyclerView.Adapter<SearchResultViewHolder
         return results.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateResults(results: List<SearchResult>) {
         this.results = results
         notifyDataSetChanged()
