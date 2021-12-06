@@ -1,6 +1,7 @@
 package ru.nifontbus.testcourse
 
 import android.content.Context
+import android.os.Build
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -14,10 +15,11 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import ru.nifontbus.testcourse.view.details.DetailsActivity
 
 @RunWith(AndroidJUnit4::class)
-//@Config(sdk = [Build.VERSION_CODES.O_MR1])
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 class DetailsActivityTest {
 
     private lateinit var scenario: ActivityScenario<DetailsActivity>
