@@ -1,4 +1,4 @@
-package ru.nifontbus.testcourse.view
+package ru.nifontbus.testcourse.view.search
 
 import android.os.Bundle
 import android.view.View
@@ -11,18 +11,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.nifontbus.testcourse.R
 import ru.nifontbus.testcourse.databinding.ActivityMainBinding
 import ru.nifontbus.testcourse.model.SearchResult
-import ru.nifontbus.testcourse.presenter.PresenterContract
-import ru.nifontbus.testcourse.presenter.SearchPresenter
+import ru.nifontbus.testcourse.presenter.search.PresenterSearchContract
+import ru.nifontbus.testcourse.presenter.search.SearchPresenter
 import ru.nifontbus.testcourse.repository.GitHubApi
 import ru.nifontbus.testcourse.repository.GitHubRepository
+import ru.nifontbus.testcourse.view.details.DetailsActivity
 import java.util.*
 
-class MainActivity : AppCompatActivity(), ViewContract {
+class MainActivity : AppCompatActivity(), ViewSearchContract {
 
     private lateinit var binding: ActivityMainBinding
 
     private val adapter = SearchResultAdapter()
-    private val presenter: PresenterContract = SearchPresenter(this, createRepository())
+    private val presenter: PresenterSearchContract = SearchPresenter(this, createRepository())
+    private var totalCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,9 @@ class MainActivity : AppCompatActivity(), ViewContract {
     }
 
     private fun setUI() {
+        binding.toDetailsActivityButton.setOnClickListener {
+            startActivity(DetailsActivity.getIntent(this, totalCount))
+        }
         setQueryListener()
         setRecyclerView()
     }
@@ -76,9 +81,8 @@ class MainActivity : AppCompatActivity(), ViewContract {
         searchResults: List<SearchResult>,
         totalCount: Int
     ) {
+        this.totalCount = totalCount
         adapter.updateResults(searchResults)
-        binding.resultsCountTextView.text =
-            String.format(Locale.getDefault(), getString(R.string.results_count), totalCount)
     }
 
     override fun displayError() {
