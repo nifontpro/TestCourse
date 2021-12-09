@@ -6,9 +6,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewbinding.BuildConfig
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import ru.nifontbus.testcourse.R
 import ru.nifontbus.testcourse.databinding.ActivityMainBinding
 import ru.nifontbus.testcourse.model.SearchResult
@@ -16,8 +13,6 @@ import ru.nifontbus.testcourse.presenter.RepositoryContract
 import ru.nifontbus.testcourse.presenter.search.PresenterSearchContract
 import ru.nifontbus.testcourse.presenter.search.SearchPresenter
 import ru.nifontbus.testcourse.repository.FakeGitHubRepository
-import ru.nifontbus.testcourse.repository.GitHubApi
-import ru.nifontbus.testcourse.repository.GitHubRepository
 import ru.nifontbus.testcourse.view.details.DetailsActivity
 import java.util.*
 
@@ -70,18 +65,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
     }
 
     private fun createRepository(): RepositoryContract {
-        return if (BuildConfig.BUILD_TYPE == FAKE) {
-            FakeGitHubRepository()
-        } else {
-            GitHubRepository(createRetrofit().create(GitHubApi::class.java))
-        }
-    }
-
-    private fun createRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        return FakeGitHubRepository()
     }
 
     override fun displaySearchResults(
@@ -112,10 +96,5 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         } else {
             binding.progressBar.visibility = View.GONE
         }
-    }
-
-    companion object {
-        const val BASE_URL = "https://api.github.com"
-        const val FAKE = "FAKE"
     }
 }
