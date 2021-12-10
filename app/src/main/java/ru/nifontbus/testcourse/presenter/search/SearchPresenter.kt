@@ -1,15 +1,15 @@
 package ru.nifontbus.testcourse.presenter.search
 
-import ru.nifontbus.testcourse.view.search.ViewSearchContract
 import retrofit2.Response
 import ru.nifontbus.testcourse.model.SearchResponse
-import ru.nifontbus.testcourse.repository.GitHubRepository
-import ru.nifontbus.testcourse.repository.GitHubRepository.GitHubRepositoryCallback
+import ru.nifontbus.testcourse.presenter.RepositoryContract
+import ru.nifontbus.testcourse.repository.RepositoryCallback
+import ru.nifontbus.testcourse.view.search.ViewSearchContract
 
 internal class SearchPresenter internal constructor(
     private val viewContract: ViewSearchContract,
-    private val repository: GitHubRepository
-) : PresenterSearchContract, GitHubRepositoryCallback {
+    private val repository: RepositoryContract
+) : PresenterSearchContract, RepositoryCallback {
 
     override fun searchGitHub(searchQuery: String) {
         viewContract.displayLoading(true)

@@ -6,15 +6,13 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import ru.nifontbus.testcourse.R
 import ru.nifontbus.testcourse.databinding.ActivityMainBinding
 import ru.nifontbus.testcourse.model.SearchResult
+import ru.nifontbus.testcourse.presenter.RepositoryContract
 import ru.nifontbus.testcourse.presenter.search.PresenterSearchContract
 import ru.nifontbus.testcourse.presenter.search.SearchPresenter
-import ru.nifontbus.testcourse.repository.GitHubApi
-import ru.nifontbus.testcourse.repository.GitHubRepository
+import ru.nifontbus.testcourse.repository.FakeGitHubRepository
 import ru.nifontbus.testcourse.view.details.DetailsActivity
 import java.util.*
 
@@ -47,7 +45,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
     }
 
     private fun setQueryListener() {
-        binding.searchEditText.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+        binding.searchEditText.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val query = binding.searchEditText.text.toString()
                 if (query.isNotBlank()) {
@@ -66,21 +64,20 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         })
     }
 
-    private fun createRepository(): GitHubRepository {
-        return GitHubRepository(createRetrofit().create(GitHubApi::class.java))
-    }
-
-    private fun createRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    private fun createRepository(): RepositoryContract {
+        return FakeGitHubRepository()
     }
 
     override fun displaySearchResults(
         searchResults: List<SearchResult>,
         totalCount: Int
     ) {
+        with(binding.totalCountTextView) {
+            visibility = View.VISIBLE
+            text =
+                String.format(Locale.getDefault(), getString(R.string.results_count), totalCount)
+        }
+
         this.totalCount = totalCount
         adapter.updateResults(searchResults)
     }
@@ -99,9 +96,5 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         } else {
             binding.progressBar.visibility = View.GONE
         }
-    }
-
-    companion object {
-        const val BASE_URL = "https://api.github.com"
     }
 }
